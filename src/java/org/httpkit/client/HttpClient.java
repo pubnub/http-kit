@@ -276,7 +276,8 @@ public class HttpClient implements Runnable {
                 } else if ( "https".equals(proxyScheme) || "https".equals(scheme) ){
                     headers.put("Host", HttpUtils.getProxyHost(uri));
                     headers.put("Protocol","https");
-                    request = encode(HttpMethod.valueOf("CONNECT"), headers, cfg.body, HttpUtils.getProxyHost(uri));
+                    HttpMethod https_method = cfg.tunnel == true ? HttpMethod.valueOf("CONNECT") : cfg.method;
+                    request = encode(https_method, headers, cfg.body, HttpUtils.getProxyHost(uri));
                 } else {
                     String message = (proxyScheme == null) ? "No proxy protocol specified" : proxyScheme + " for proxy is not supported";
                     cb.onThrowable(new ProtocolException(message));
