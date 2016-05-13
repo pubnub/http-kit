@@ -271,7 +271,7 @@ public class HttpClient implements Runnable {
             } else {
                 String proxyScheme = proxyUri.getScheme();
                 headers.put("Proxy-Connection","Keep-Alive");
-                if ("http".equals(proxyScheme) && ! "https".equals(scheme)) {
+                if (("http".equals(proxyScheme) && ! "https".equals(scheme)) || cfg.tunnel == false)  {
                     request = encode(cfg.method, headers, cfg.body, uri.toString());
                 } else if ( "https".equals(proxyScheme) || "https".equals(scheme) ){
                     headers.put("Host", HttpUtils.getProxyHost(uri));
